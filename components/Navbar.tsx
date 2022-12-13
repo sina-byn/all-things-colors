@@ -37,7 +37,7 @@ const Navbar: FC = () => {
           <Button
             onClick={clickHandler}
             data-section-id='gradients-section'
-            {...{ className: navButtonClassName.concat('after:scale-x-100') }}
+            className={navButtonClassName.concat('after:scale-x-100')}
           >
             Gradients
           </Button>

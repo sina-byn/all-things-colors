@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   return (
     <>
       <header className='h-[50px] sticky top-0 bg-gray-100 py-3'>
-        <div className='header-content container flex items-center justify-between px-6 -mt-0.5 mx-auto'>
+        <div className='header-content max-w-[1440px] flex items-center justify-between px-6 -mt-0.5 mx-auto'>
           <h1 className='text-2xl font-bold overflow-hidden'>
             <span className='text-orange-red'>A</span>ll&nbsp;
             <span className='text-orange-red'>T</span>hings&nbsp;
@@ -21,9 +21,9 @@ const Home: NextPage = () => {
           <Navbar />
         </div>
       </header>
-      <main className='container px-6 mx-auto'>
+      <main className='max-w-[1440px] px-6 mx-auto'>
         <SectionHeader title='Gradients' />
-        <section className='gradients-section grid grid-cols-5 gap-5'>
+        <section className='gradients-section grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-5'>
           <GradientCard.Random />
           {GRADIENTS_DATA.map(gradient => (
             <GradientCard.Static

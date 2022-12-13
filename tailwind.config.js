@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '500px'
+      },
       colors: {
         "orange-red": "#ff4500"
       }

@@ -24,6 +24,7 @@ const Home: NextPage = () => {
       <main className='container px-6 mx-auto'>
         <SectionHeader title='Gradients' />
         <section className='gradients-section grid grid-cols-5 gap-5'>
+          <GradientCard.Random />
           {GRADIENTS_DATA.map(gradient => (
             <GradientCard.Static
               id={gradient.id}

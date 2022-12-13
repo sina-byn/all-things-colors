@@ -11,7 +11,8 @@ const Document = () => {
           crossOrigin='anonymous'
           referrerPolicy='no-referrer'
         />
-        <style className='gradients-styles'></style>
+        <style id='gradients-styles'></style>
+        <style id='random-gradient-styles'></style>
       </Head>
       <body>
         <Main />

@@ -1,5 +1,11 @@
 import { MouseEvent } from 'react';
 
+export interface RgbObject {
+  r: number;
+  g: number;
+  b: number;
+}
+
 const copyToClipboard = (e: MouseEvent) => {
   if (!('clipboard' in navigator)) return;
 
@@ -46,10 +52,10 @@ const generateGradientCssString = (stops: string[]) => {
 };
 
 const generateRandomHexChunk = () => {
-    const chunk = Math.floor(Math.random() * 256).toString(16);
+  const chunk = Math.floor(Math.random() * 256).toString(16);
 
-    return chunk.length === 2 ? chunk : '0' + chunk;
-}
+  return chunk.length === 2 ? chunk : '0' + chunk;
+};
 
 const generateRandomHex = () => {
   return (
@@ -71,8 +77,71 @@ const generateRandomGradientStops = () => {
   return stops;
 };
 
+const hexToRgb = (hex: string) => {
+  const comp_1 = parseInt(hex.slice(1, 3), 16);
+  const comp_2 = parseInt(hex.slice(3, 5), 16);
+  const comp_3 = parseInt(hex.slice(5), 16);
+
+  return {
+    r: comp_1,
+    g: comp_2,
+    b: comp_3
+  };
+};
+
+const toHexString = (rgbObj: RgbObject) =>
+  `#${Object.values(rgbObj).reduce((prev, curr) => {
+    const comp = curr.toString(16);
+    return (prev += comp.length === 2 ? comp : '0' + comp);
+  }, '')}`;
+
+const toRgbString = (rgbObj: RgbObject) =>
+  `rgb(${Object.values(rgbObj).join(', ')})`;
+
+const generateTint = (rgbObj: RgbObject, factor: number) => {
+  return Object.entries(rgbObj).reduce(
+    (tintObj: Partial<RgbObject>, [comp, value]) => {
+      // @ts-ignore
+      tintObj[comp] = Math.round(value + (255 - value) * factor);
+      return tintObj;
+    },
+    {}
+  );
+};
+
+const generateShade = (rgbObj: RgbObject, factor: number) => {
+  return Object.entries(rgbObj).reduce(
+    (shadeObj: Partial<RgbObject>, [comp, value]) => {
+      // @ts-ignore
+      shadeObj[comp] = Math.round(value * factor);
+      return shadeObj;
+    },
+    {}
+  );
+};
+
+const generatePaletteFromColor = (type: 'shade' | 'tint', rgbObj: RgbObject) => {
+  const colors = [];
+
+  for (let i = 0; i <= 1; i += 0.1) {
+    switch (type) {
+      case 'shade':
+        colors.push(generateShade(rgbObj, 1 - i));
+        break;
+      default:
+        colors.push(generateTint(rgbObj, i));
+    }
+  }
+  
+  return colors;
+};
+
 export {
+  hexToRgb,
+  toHexString,
+  toRgbString,
   copyToClipboard,
+  generatePaletteFromColor,
   generateGradientCssString,
   generateRandomGradientStops,
 };

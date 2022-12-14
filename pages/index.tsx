@@ -1,14 +1,26 @@
 import type { NextPage } from 'next';
-import GradientCard from '../components/GradientCard';
+import { ChangeEvent, useState } from 'react';
 
 // * components
 import Navbar from '../components/Navbar';
 import SectionHeader from '../components/SectionHeader';
+import GradientCard from '../components/GradientCard';
+import ColorCard from '../components/ColorCard';
+import ColorInput from '../components/ColorInput';
+
+// * utils
+import {
+  hexToRgb,
+  RgbObject,
+  generatePaletteFromColor,
+} from '../utils/functions';
 
 // * data
 import GRADIENTS_DATA from '../data/gradients.json';
 
 const Home: NextPage = () => {
+  const [baseColor, setBaseColor] = useState('#ff4500');
+
   return (
     <>
       <header className='h-[50px] sticky top-0 bg-gray-100 py-3'>
@@ -32,6 +44,32 @@ const Home: NextPage = () => {
               stops={gradient.stops}
             />
           ))}
+        </section>
+        <SectionHeader title='Tints and Shades' />
+        <section className='tints-and-shades-section'>
+          <ColorInput value={baseColor} setValue={setBaseColor} />
+          <section className='tints-section grid grid-cols-4 xs:grid-cols-6 md:grid-cols-11 gap-y-5 mb-10'>
+            {generatePaletteFromColor('tint', hexToRgb(baseColor)).map(
+              (tint, idx) => (
+                <ColorCard
+                  key={idx}
+                  percent={idx * 10}
+                  rgbObj={tint as RgbObject}
+                />
+              )
+            )}
+          </section>
+          <section className='shades-section grid grid-cols-4 xs:grid-cols-6 md:grid-cols-11 gap-y-5'>
+            {generatePaletteFromColor('shade', hexToRgb(baseColor)).map(
+              (shades, idx) => (
+                <ColorCard
+                  key={idx}
+                  percent={idx * 10}
+                  rgbObj={shades as RgbObject}
+                />
+              )
+            )}
+          </section>
         </section>
       </main>
     </>

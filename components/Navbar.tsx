@@ -14,17 +14,21 @@ const Navbar: FC = () => {
   const clickHandler = (e: MouseEvent) => {
     const navButton = e.target as HTMLElement;
     const sectionId = navButton.dataset.sectionId;
-    const section = document.querySelector(`#${sectionId}`);
+    const section = document.querySelector(`.${sectionId}`);
+
+    console.log(sectionId);
 
     if (!section || !sectionId) return;
 
-    window.scrollTo({ top: window.scrollY + section.getBoundingClientRect().top - 50, behavior: 'smooth' });
+    const top = window.scrollY + section.getBoundingClientRect().top;
+
+    window.scrollTo({ top: top > 200 ? top - 100 : 0, behavior: 'smooth' });
 
     const navButtons = Array.from(document.querySelectorAll('.nav-btn'));
 
     navButtons.forEach(btn => {
-        btn.classList.remove('after:scale-x-100');
-        btn.classList.add('after:scale-x-0');
+      btn.classList.remove('after:scale-x-100');
+      btn.classList.add('after:scale-x-0');
     });
     navButton.classList.add('after:scale-x-100');
     navButton.classList.remove('after:scale-x-0');
@@ -45,10 +49,10 @@ const Navbar: FC = () => {
         <li>
           <Button
             onClick={clickHandler}
-            data-section-id='color-palettes-section'
+            data-section-id='tints-and-shades-section'
             {...{ className: navButtonClassName }}
           >
-            Color Palette Generator
+            Tints and Shades
           </Button>
         </li>
       </ul>

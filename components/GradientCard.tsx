@@ -39,8 +39,6 @@ const GradientCard: FC<GradientCardProps> = ({
     const styleTag = document.querySelector(`style#${styleTagId}`)!;
     styleInjected.current = true;
 
-    console.log(styleTag);
-
     if (styleTagId === 'gradients-styles') {
         styleTag.textContent += `
             .gradient-${id} {

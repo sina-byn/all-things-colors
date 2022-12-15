@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { ChangeEvent, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // * components
 import Navbar from '../components/Navbar';
@@ -11,15 +11,23 @@ import ColorInput from '../components/ColorInput';
 // * utils
 import {
   hexToRgb,
-  RgbObject,
+  generatePalette,
   generatePaletteFromColor,
 } from '../utils/functions';
 
 // * data
 import GRADIENTS_DATA from '../data/gradients.json';
 
+// * interfaces
+import { RgbObject, Palette } from '../utils/functions';
+import Button from '../components/Button';
+import PaletteCard from '../components/PaletteCard';
+
 const Home: NextPage = () => {
-  const [baseColor, setBaseColor] = useState('#ff4500');
+  const [baseColor, setBaseColor] = useState<string>('#ff4500');
+  const [plaette, setPalette] = useState<Palette>([]);
+
+  useEffect(() => generatePalette(setPalette), []);
 
   return (
     <>
@@ -35,7 +43,7 @@ const Home: NextPage = () => {
       </header>
       <main className='max-w-[1440px] px-6 mx-auto'>
         <SectionHeader title='Gradients' />
-        <section className='gradients-section grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-5'>
+        <section className='gradients-section grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-5 mb-16'>
           <GradientCard.Random />
           {GRADIENTS_DATA.map(gradient => (
             <GradientCard.Static
@@ -46,7 +54,7 @@ const Home: NextPage = () => {
           ))}
         </section>
         <SectionHeader title='Tints and Shades' />
-        <section className='tints-and-shades-section'>
+        <section className='tints-and-shades-section mb-16'>
           <ColorInput value={baseColor} setValue={setBaseColor} />
           <section className='tints-section grid grid-cols-4 xs:grid-cols-6 md:grid-cols-11 gap-y-5 mb-10'>
             {generatePaletteFromColor('tint', hexToRgb(baseColor)).map(
@@ -70,6 +78,26 @@ const Home: NextPage = () => {
               )
             )}
           </section>
+        </section>
+        <SectionHeader title='Color Palette' />
+        <section className='color-palette-section mb-16'>
+          <section className='color-palette flex justify-center mx-auto'>
+            {plaette.map((plaetteColor, idx) => (
+              <PaletteCard
+                key={idx}
+                idx={idx}
+                color={plaetteColor.color}
+                locked={plaetteColor.locked}
+                setPalette={setPalette}
+              />
+            ))}
+          </section>
+          <Button
+            onClick={() => generatePalette(setPalette)}
+            className='block border-2 border-zinc-700 px-2 pt-1 pb-1.5 rounded-md mx-auto mt-5'
+          >
+            randomize palette
+          </Button>
         </section>
       </main>
     </>

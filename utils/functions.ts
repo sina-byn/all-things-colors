@@ -1,10 +1,18 @@
-import { MouseEvent } from 'react';
+import { Dispatch, MouseEvent, SetStateAction } from 'react';
 
+// * interfaces
 export interface RgbObject {
   r: number;
   g: number;
   b: number;
 }
+
+interface PaletteColor {
+  color: string;
+  locked: boolean;
+}
+
+export type Palette = PaletteColor[];
 
 const copyToClipboard = (e: MouseEvent) => {
   if (!('clipboard' in navigator)) return;
@@ -85,7 +93,7 @@ const hexToRgb = (hex: string) => {
   return {
     r: comp_1,
     g: comp_2,
-    b: comp_3
+    b: comp_3,
   };
 };
 
@@ -120,7 +128,10 @@ const generateShade = (rgbObj: RgbObject, factor: number) => {
   );
 };
 
-const generatePaletteFromColor = (type: 'shade' | 'tint', rgbObj: RgbObject) => {
+const generatePaletteFromColor = (
+  type: 'shade' | 'tint',
+  rgbObj: RgbObject
+) => {
   const colors = [];
 
   for (let i = 0; i <= 1; i += 0.1) {
@@ -132,8 +143,25 @@ const generatePaletteFromColor = (type: 'shade' | 'tint', rgbObj: RgbObject) => 
         colors.push(generateTint(rgbObj, i));
     }
   }
-  
+
   return colors;
+};
+
+const generatePalette = (setPalette: Dispatch<SetStateAction<Palette>>) => {
+  setPalette(prevPalette => {
+    if (prevPalette.length === 0) {
+      for (let i = 0; i < 5; i++) {
+        prevPalette[i] = { color: generateRandomHex(), locked: false };
+      }
+    } else {
+      for (let i = 0; i < 5; i++) {
+        if (prevPalette[i].locked) continue;
+        prevPalette[i].color = generateRandomHex();
+      }
+    }
+
+    return prevPalette.slice();
+  });
 };
 
 export {
@@ -141,6 +169,7 @@ export {
   toHexString,
   toRgbString,
   copyToClipboard,
+  generatePalette,
   generatePaletteFromColor,
   generateGradientCssString,
   generateRandomGradientStops,

@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+// * interfaces
 interface SectionHeaderProps {
     title: string;
 }

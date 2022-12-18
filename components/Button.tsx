@@ -1,5 +1,6 @@
 import { FC, MouseEventHandler, ReactNode } from 'react';
 
+// * interfaces
 interface ButtonProps {
     className?: string;
     onClick: MouseEventHandler;

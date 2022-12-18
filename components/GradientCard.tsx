@@ -4,11 +4,11 @@ import { FC, useEffect, useRef, useState, ReactNode } from 'react';
 import Button from './Button';
 
 // * utils
+import { copyToClipboard } from '../utils/functions';
 import {
-  copyToClipboard,
   generateGradientCssString,
   generateRandomGradientStops,
-} from '../utils/functions';
+} from '../utils/gradient-generation';
 
 // * interfaces
 interface GradientCardProps {
@@ -29,7 +29,7 @@ const GradientCard: FC<GradientCardProps> = ({
   stops,
   children,
   coverClassName,
-  styleTagId
+  styleTagId,
 }) => {
   const styleInjected = useRef<boolean>(false);
 
@@ -40,14 +40,16 @@ const GradientCard: FC<GradientCardProps> = ({
     styleInjected.current = true;
 
     if (styleTagId === 'gradients-styles') {
-        styleTag.textContent += `
+      styleTag.textContent += `
             .gradient-${id} {
-                background: linear-gradient(to bottom right, ${stops.join(' ,')});
+                background: linear-gradient(to bottom right, ${stops.join(
+                  ' ,'
+                )});
             }
         `;
-        return;
+      return;
     }
-        
+
     styleTag.textContent = `
         .gradient-${id} {
             background: linear-gradient(to bottom right, ${stops.join(' ,')});

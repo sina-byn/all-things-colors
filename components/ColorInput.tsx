@@ -1,7 +1,12 @@
 import { FC, useId, Dispatch, SetStateAction, ChangeEvent } from 'react';
-import { copyToClipboard } from '../utils/functions';
+
+// * components
 import Button from './Button';
 
+// * utils
+import { copyToClipboard } from '../utils/functions';
+
+// * interfaces
 interface ColorInputProps {
   value: string;
   className?: string;
@@ -32,7 +37,11 @@ const ColorInput: FC<ColorInputProps> = ({ value, setValue, className }) => {
           onChange={changeHandler}
         />
       </label>
-      <Button onClick={copyToClipboard} data-value={value} className='border-2 border-zinc-700 rounded-md font-medium px-2 py-1'>
+      <Button
+        onClick={copyToClipboard}
+        data-value={value}
+        className='border-2 border-zinc-700 rounded-md font-medium px-2 py-1'
+      >
         {value}
       </Button>
     </div>

@@ -1,18 +1,7 @@
-import { Dispatch, MouseEvent, SetStateAction } from 'react';
+import { MouseEvent } from 'react';
 
 // * interfaces
-export interface RgbObject {
-  r: number;
-  g: number;
-  b: number;
-}
-
-interface PaletteColor {
-  color: string;
-  locked: boolean;
-}
-
-export type Palette = PaletteColor[];
+import type { RgbObject } from './interfaces';
 
 const copyToClipboard = (e: MouseEvent) => {
   if (!('clipboard' in navigator)) return;
@@ -26,151 +15,59 @@ const copyToClipboard = (e: MouseEvent) => {
     .catch(err => console.error(err));
 };
 
-const generateGradientCssString = (stops: string[]) => {
-  const generateWebkitGradient = (stops: string[]) => {
-    let gradientString = '';
+const parsePixelsData = (imageData: ImageData) => {
+  const { data } = imageData;
+  const rbgValues: RgbObject[] = [];
+  const dataLength = data.length;
 
-    stops.forEach((stop, idx) => {
-      switch (idx) {
-        case 0:
-          gradientString += `from(${stop}), `;
-          break;
-        case stops.length - 1:
-          gradientString += `to(${stop})`;
-          break;
-        default:
-          gradientString += `color-stop(${stop})`;
-      }
+  for (let i = 0; i < dataLength; i += 4) {
+    rbgValues.push({
+      r: data[i],
+      g: data[i + 1],
+      b: data[i + 2],
     });
-
-    return gradientString;
-  };
-  const backup = `background-color: ${stops[0]};`;
-  const operaCss = `background: -o-linear-gradient(to bottom right, ${stops.join(
-    ', '
-  )});`;
-  const webkitCss = `background: -webkit-gradient(linear, left top, right bottom, ${generateWebkitGradient(
-    stops
-  )});`;
-  const normalCss = `background: linear-gradient(to bottom right, ${stops.join(
-    ', '
-  )});`;
-
-  return `\r\t${backup}\n\t${operaCss}\n\t${webkitCss}\n\t${normalCss}`;
-};
-
-const generateRandomHexChunk = () => {
-  const chunk = Math.floor(Math.random() * 256).toString(16);
-
-  return chunk.length === 2 ? chunk : '0' + chunk;
-};
-
-const generateRandomHex = () => {
-  return (
-    '#' +
-    generateRandomHexChunk() +
-    generateRandomHexChunk() +
-    generateRandomHexChunk()
-  );
-};
-
-const generateRandomGradientStops = () => {
-  const stopsCount = 2;
-  const stops = [];
-
-  for (let i = 0; i < stopsCount; i++) {
-    stops.push(generateRandomHex());
   }
 
-  return stops;
+  return rbgValues;
 };
 
-const hexToRgb = (hex: string) => {
-  const comp_1 = parseInt(hex.slice(1, 3), 16);
-  const comp_2 = parseInt(hex.slice(3, 5), 16);
-  const comp_3 = parseInt(hex.slice(5), 16);
+const findBiggestRangeComp = (rgbValues: RgbObject[]) => {
+  let minR = Number.MAX_VALUE;
+  let minG = Number.MAX_VALUE;
+  let minB = Number.MAX_VALUE;
 
-  return {
-    r: comp_1,
-    g: comp_2,
-    b: comp_3,
-  };
-};
+  let maxR = Number.MIN_VALUE;
+  let maxG = Number.MIN_VALUE;
+  let maxB = Number.MIN_VALUE;
 
-const toHexString = (rgbObj: RgbObject) =>
-  `#${Object.values(rgbObj).reduce((prev, curr) => {
-    const comp = curr.toString(16);
-    return (prev += comp.length === 2 ? comp : '0' + comp);
-  }, '')}`;
+  rgbValues.forEach(({ r, g, b }) => {
+    minR = Math.min(minR, r);
+    minG = Math.min(minG, g);
+    minB = Math.min(minB, b);
 
-const toRgbString = (rgbObj: RgbObject) =>
-  `rgb(${Object.values(rgbObj).join(', ')})`;
-
-const generateTint = (rgbObj: RgbObject, factor: number) => {
-  return Object.entries(rgbObj).reduce(
-    (tintObj: Partial<RgbObject>, [comp, value]) => {
-      // @ts-ignore
-      tintObj[comp] = Math.round(value + (255 - value) * factor);
-      return tintObj;
-    },
-    {}
-  );
-};
-
-const generateShade = (rgbObj: RgbObject, factor: number) => {
-  return Object.entries(rgbObj).reduce(
-    (shadeObj: Partial<RgbObject>, [comp, value]) => {
-      // @ts-ignore
-      shadeObj[comp] = Math.round(value * factor);
-      return shadeObj;
-    },
-    {}
-  );
-};
-
-const generatePaletteFromColor = (
-  type: 'shade' | 'tint',
-  rgbObj: RgbObject
-) => {
-  const colors = [];
-
-  for (let i = 0; i <= 1; i += 0.1) {
-    switch (type) {
-      case 'shade':
-        colors.push(generateShade(rgbObj, 1 - i));
-        break;
-      default:
-        colors.push(generateTint(rgbObj, i));
-    }
-  }
-
-  return colors;
-};
-
-const generatePalette = (setPalette: Dispatch<SetStateAction<Palette>>) => {
-  setPalette(prevPalette => {
-    if (prevPalette.length === 0) {
-      for (let i = 0; i < 5; i++) {
-        prevPalette[i] = { color: generateRandomHex(), locked: false };
-      }
-    } else {
-      for (let i = 0; i < 5; i++) {
-        if (prevPalette[i].locked) continue;
-        prevPalette[i].color = generateRandomHex();
-      }
-    }
-
-    return prevPalette.slice();
+    maxR = Math.max(maxR, r);
+    maxG = Math.max(maxG, g);
+    maxB = Math.min(maxB, b);
   });
+
+  const rangeR = maxR - minR;
+  const rangeG = maxG - minG;
+  const rangeB = maxB - minB;
+
+  const biggestRange = Math.max(rangeR, rangeG, rangeB);
+
+  switch (biggestRange) {
+    case rangeR:
+      return 'r';
+    case rangeG:
+      return 'g';
+    default:
+      return 'b';
+  }
 };
 
 export {
-  hexToRgb,
-  toHexString,
-  toRgbString,
+  parsePixelsData,
   copyToClipboard,
-  generatePalette,
-  generatePaletteFromColor,
-  generateGradientCssString,
-  generateRandomGradientStops,
+  findBiggestRangeComp,
 };

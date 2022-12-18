@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 
@@ -7,25 +8,34 @@ import SectionHeader from '../components/SectionHeader';
 import GradientCard from '../components/GradientCard';
 import ColorCard from '../components/ColorCard';
 import ColorInput from '../components/ColorInput';
+import Button from '../components/Button';
+import PaletteCard from '../components/PaletteCard';
+import ImageInput from '../components/ImageInput';
+const ToastNotification = dynamic(
+  () => import('../components/ToastNotification'),
+  { ssr: false }
+);
 
 // * utils
 import {
-  hexToRgb,
   generatePalette,
   generatePaletteFromColor,
-} from '../utils/functions';
+} from '../utils/palette-generation';
+import { hexToRgb, toHexString } from '../utils/color-conversion';
 
 // * data
 import GRADIENTS_DATA from '../data/gradients.json';
 
 // * interfaces
-import { RgbObject, Palette } from '../utils/functions';
-import Button from '../components/Button';
-import PaletteCard from '../components/PaletteCard';
+import { RgbObject, ImagePalette, Palette } from '../utils/interfaces';
 
 const Home: NextPage = () => {
   const [baseColor, setBaseColor] = useState<string>('#ff4500');
   const [plaette, setPalette] = useState<Palette>([]);
+  const [imagePalette, setImagePalette] = useState<ImagePalette>({
+    mainColors: [],
+    complementaryColors: [],
+  });
 
   useEffect(() => generatePalette(setPalette), []);
 
@@ -62,18 +72,18 @@ const Home: NextPage = () => {
                 <ColorCard
                   key={idx}
                   percent={idx * 10}
-                  rgbObj={tint as RgbObject}
+                  color={toHexString(tint as RgbObject)}
                 />
               )
             )}
           </section>
           <section className='shades-section grid grid-cols-4 xs:grid-cols-6 md:grid-cols-11 gap-y-5'>
             {generatePaletteFromColor('shade', hexToRgb(baseColor)).map(
-              (shades, idx) => (
+              (shade, idx) => (
                 <ColorCard
                   key={idx}
                   percent={idx * 10}
-                  rgbObj={shades as RgbObject}
+                  color={toHexString(shade as RgbObject)}
                 />
               )
             )}
@@ -81,7 +91,7 @@ const Home: NextPage = () => {
         </section>
         <SectionHeader title='Color Palette' />
         <section className='color-palette-section mb-16'>
-          <section className='color-palette flex justify-center mx-auto'>
+          <section className='color-palette w-fit grid grid-cols-3 md:grid-cols-5 gap-y-4 mx-auto'>
             {plaette.map((plaetteColor, idx) => (
               <PaletteCard
                 key={idx}
@@ -98,6 +108,30 @@ const Home: NextPage = () => {
           >
             randomize palette
           </Button>
+        </section>
+        <SectionHeader title='Image Palette' />
+        <section className='image-color-palette-section mb-16'>
+          <ImageInput setImagePalette={setImagePalette} />
+          <section className='image-palette flex flex-col gap-x-16 mt-10'>
+            <h4 className='text-xl font-medium my-4'>
+              Main Colors
+            </h4>
+            <div className='main-palette grid grid-cols-4 md:grid-cols-8 gap-y-4'>
+              {imagePalette.mainColors &&
+                imagePalette.mainColors.map(color => (
+                  <ColorCard key={color} color={color} />
+                ))}
+            </div>
+            <h4 className='text-xl font-medium mt-10 mb-4'>
+              Complementary Colors
+            </h4>
+            <div className='complementary-palette grid grid-cols-4 md:grid-cols-8 gap-y-4'>
+              {imagePalette.complementaryColors &&
+                imagePalette.complementaryColors.map(color => (
+                  <ColorCard key={color} color={color} />
+                ))}
+            </div>
+          </section>
         </section>
       </main>
     </>

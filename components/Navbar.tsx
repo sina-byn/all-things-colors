@@ -50,7 +50,7 @@ const Navbar: FC = () => {
           <Button
             onClick={clickHandler}
             data-section-id='tints-and-shades-section'
-            {...{ className: navButtonClassName }}
+            className={navButtonClassName}
           >
             Tints and Shades
           </Button>
@@ -59,7 +59,7 @@ const Navbar: FC = () => {
           <Button
             onClick={clickHandler}
             data-section-id='color-palette-section'
-            {...{ className: navButtonClassName }}
+            className={navButtonClassName}
           >
             Color Palette
           </Button>
@@ -68,7 +68,7 @@ const Navbar: FC = () => {
           <Button
             onClick={clickHandler}
             data-section-id='image-color-palette-section'
-            {...{ className: navButtonClassName }}
+            className={navButtonClassName}
           >
             Image Palette
           </Button>

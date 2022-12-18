@@ -29,7 +29,7 @@ const PaletteCard: FC<PaletteCardProps> = ({ idx, color, locked, setPalette }) =
       <div
         style={{ background: color }}
         className={`
-            palette-card min-w-[75px] md:min-w-[100px] flex items-center justify-center aspect-square
+            palette-card w-full md:min-w-[100px] flex items-center justify-center aspect-square
             ${idx === 0 ? 'md:rounded-l-lg' : ''}
             ${idx === 4 ? 'md:rounded-r-lg' : ''}
         `}

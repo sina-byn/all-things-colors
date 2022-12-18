@@ -47,7 +47,7 @@ const Home: NextPage = () => {
   return (
     <>
       <header className='h-[50px] sticky top-0 z-50 bg-gray-100 py-3'>
-        <div className='header-content max-w-[1440px] flex items-center justify-between px-6 -mt-0.5 mx-auto'>
+        <div className='header-content max-w-[1440px] flex items-center justify-between px-2 xs:px-6 -mt-0.5 mx-auto'>
           <h1 className='text-2xl font-bold overflow-hidden'>
             <span className='text-orange-red'>A</span>ll&nbsp;
             <span className='text-orange-red'>T</span>hings&nbsp;
@@ -56,7 +56,7 @@ const Home: NextPage = () => {
           <Navbar />
         </div>
       </header>
-      <main className='max-w-[1440px] px-6 mx-auto'>
+      <main className='max-w-[1440px] px-2 xs:px-6 mx-auto'>
         <SectionHeader title='Gradients' />
         <section className='gradients-section grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-5 mb-16'>
           <GradientCard.Random />
@@ -82,7 +82,7 @@ const Home: NextPage = () => {
               )
             )}
           </section>
-          <section className='shades-section grid grid-cols-4 xs:grid-cols-6 md:grid-cols-11 gap-y-5'>
+          <section className='shades-section grid grid-cols-6 md:grid-cols-11 gap-y-5'>
             {generatePaletteFromColor('shade', hexToRgb(baseColor)).map(
               (shade, idx) => (
                 <ColorCard
@@ -96,7 +96,7 @@ const Home: NextPage = () => {
         </section>
         <SectionHeader title='Color Palette' />
         <section className='color-palette-section mb-16'>
-          <section className='color-palette w-fit grid grid-cols-3 md:grid-cols-5 gap-y-4 mx-auto'>
+          <section className='color-palette md:w-fit grid grid-cols-2 2xs:grid-cols-5 gap-y-4 mx-auto'>
             {plaette.map((plaetteColor, idx) => (
               <PaletteCard
                 key={idx}

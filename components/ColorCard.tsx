@@ -1,8 +1,13 @@
 import { FC } from 'react';
 
+// * components
+import Button from './Button';
+
 // * utils
-import { copyToClipboard } from '../utils/functions';
 import { generateComplementeryColor } from '../utils/color-generation';
+
+// * messages
+import readMessage from '../data/readMessage';
 
 // * interfaces
 interface ColorCardProps {
@@ -22,12 +27,14 @@ const ColorCard: FC<ColorCardProps> = ({ percent, color }) => {
         style={{ background: color }}
         className='color-card w-full flex items-center justify-center aspect-square shadow-md'
       >
-        <i
-          data-value={color}
-          style={{ color: generateComplementeryColor(color) }}
-          onClick={copyToClipboard}
-          className='fa-solid fa-clipboard fa-2xl text-white transition-all duration-300 cursor-pointer'
-        />
+        <Button>
+          <i
+            data-value={color}
+            data-message={readMessage('messages.notifs.color')}
+            style={{ color: generateComplementeryColor(color) }}
+            className='fa-solid fa-clipboard fa-2xl text-white transition-all duration-300 cursor-pointer'
+          />
+        </Button>
       </div>
       <span className='font-medium -mt-1'>{color}</span>
     </div>

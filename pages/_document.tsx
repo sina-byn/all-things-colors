@@ -15,7 +15,7 @@ const Document = () => {
         <style id='random-gradient-styles' />
       </Head>
       <body>
-        <div id='toast-notif-container' className="toast-notif-container w-auto h-fit fixed right-0 top-0 z-[100]" />
+        <div id='toast-notif-container' className="toast-notif-container flex flex-col gap-y-3 w-auto h-fit fixed right-0 top-0 z-[100] pb-10" />
         <Main />
         <NextScript />
       </body>

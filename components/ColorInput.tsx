@@ -3,8 +3,8 @@ import { FC, useId, Dispatch, SetStateAction, ChangeEvent } from 'react';
 // * components
 import Button from './Button';
 
-// * utils
-import { copyToClipboard } from '../utils/functions';
+// * messages
+import readMessage from '../data/readMessage';
 
 // * interfaces
 interface ColorInputProps {
@@ -38,8 +38,8 @@ const ColorInput: FC<ColorInputProps> = ({ value, setValue, className }) => {
         />
       </label>
       <Button
-        onClick={copyToClipboard}
         data-value={value}
+        data-message={readMessage('message.notifs.color')}
         className='border-2 border-zinc-700 rounded-md font-medium px-2 py-1'
       >
         {value}

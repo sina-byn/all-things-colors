@@ -4,11 +4,13 @@ import { FC, useEffect, useRef, useState, ReactNode } from 'react';
 import Button from './Button';
 
 // * utils
-import { copyToClipboard } from '../utils/functions';
 import {
   generateGradientCssString,
   generateRandomGradientStops,
 } from '../utils/gradient-generation';
+
+// * messages
+import readMessage from '../data/readMessage';
 
 // * interfaces
 interface GradientCardProps {
@@ -64,11 +66,13 @@ const GradientCard: FC<GradientCardProps> = ({
           card-cover flex flex-col items-center justify-center w-full h-full gap-y-2 relative ${coverClassName}
         `}
       >
-        <i
-          onClick={copyToClipboard}
-          data-value={generateGradientCssString(stops)}
-          className='fa-solid fa-clipboard fa-xl text-white absolute top-6 right-3 cursor-pointer transition-all duration-300 active:scale-90'
-        />
+        <Button>
+          <i
+            data-value={generateGradientCssString(stops)}
+            data-message={'Gradient Code Copied to Clipboard'}
+            className='fa-solid fa-clipboard fa-xl text-white absolute top-6 right-3 cursor-pointer transition-all duration-300 active:scale-90'
+          />
+        </Button>
         {children}
       </div>
     </div>
@@ -86,8 +90,8 @@ const StaticGradientCard: FC<StaticGradientCardProps> = ({ id, stops }) => {
       {stops.map((stop, idx) => (
         <Button
           key={idx}
-          onClick={copyToClipboard}
           data-value={stop}
+          data-message={readMessage('messages.notifs.color')}
           className='w-full max-w-[120px] text-gray-200 border-2 border-gray-200 rounded-lg py-1 hover:bg-gray-200/50'
         >
           {stop}
@@ -112,8 +116,8 @@ const RandomGradientCard: FC = () => {
         {stops.map((stop, idx) => (
           <Button
             key={idx}
-            onClick={copyToClipboard}
             data-value={stop}
+            data-message={readMessage('messages.notifs.color')}
             className='w-full text-gray-200 border-2 border-gray-200 rounded-lg py-1 hover:bg-gray-200/50'
           >
             {stop}

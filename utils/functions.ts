@@ -1,13 +1,8 @@
-import { MouseEvent } from 'react';
-
 // * interfaces
 import type { RgbObject } from './interfaces';
 
-const copyToClipboard = (e: MouseEvent) => {
+const copyToClipboard = (value: string) => {
   if (!('clipboard' in navigator)) return;
-
-  const button = e.target as HTMLElement;
-  const value = button.dataset.value!;
 
   navigator.clipboard
     .writeText(value)

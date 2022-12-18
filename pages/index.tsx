@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import type { NextPage } from 'next';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 // * components
 import Navbar from '../components/Navbar';
@@ -16,6 +16,9 @@ const ToastNotification = dynamic(
   { ssr: false }
 );
 
+// * context
+import { AppCtx } from '../context/AppContextProvider';
+
 // * utils
 import {
   generatePalette,
@@ -30,6 +33,8 @@ import GRADIENTS_DATA from '../data/gradients.json';
 import { RgbObject, ImagePalette, Palette } from '../utils/interfaces';
 
 const Home: NextPage = () => {
+  const { notifs } = useContext(AppCtx)!;
+
   const [baseColor, setBaseColor] = useState<string>('#ff4500');
   const [plaette, setPalette] = useState<Palette>([]);
   const [imagePalette, setImagePalette] = useState<ImagePalette>({
@@ -113,26 +118,34 @@ const Home: NextPage = () => {
         <section className='image-color-palette-section mb-16'>
           <ImageInput setImagePalette={setImagePalette} />
           <section className='image-palette flex flex-col gap-x-16 mt-10'>
-            <h4 className='text-xl font-medium my-4'>
-              Main Colors
-            </h4>
-            <div className='main-palette grid grid-cols-4 md:grid-cols-8 gap-y-4'>
-              {imagePalette.mainColors &&
-                imagePalette.mainColors.map(color => (
-                  <ColorCard key={color} color={color} />
-                ))}
-            </div>
-            <h4 className='text-xl font-medium mt-10 mb-4'>
-              Complementary Colors
-            </h4>
-            <div className='complementary-palette grid grid-cols-4 md:grid-cols-8 gap-y-4'>
-              {imagePalette.complementaryColors &&
-                imagePalette.complementaryColors.map(color => (
-                  <ColorCard key={color} color={color} />
-                ))}
-            </div>
+            {imagePalette.mainColors.length > 0 && (
+              <>
+                <h4 className='text-xl font-medium my-4'>Main Colors</h4>
+                <div className='main-palette grid grid-cols-4 md:grid-cols-8 gap-y-4'>
+                  {imagePalette.mainColors.map(color => (
+                    <ColorCard key={color} color={color} />
+                  ))}
+                </div>
+              </>
+            )}
+            {imagePalette.complementaryColors.length > 0 && (
+              <>
+                <h4 className='text-xl font-medium mt-10 mb-4'>
+                  Complementary Colors
+                </h4>
+                <div className='complementary-palette grid grid-cols-4 md:grid-cols-8 gap-y-4'>
+                  {imagePalette.complementaryColors.map(color => (
+                    <ColorCard key={color} color={color} />
+                  ))}
+                </div>
+              </>
+            )}
           </section>
         </section>
+        {notifs &&
+          notifs.map((notif, idx) => (
+            <ToastNotification key={idx} message={notif} />
+          ))}
       </main>
     </>
   );

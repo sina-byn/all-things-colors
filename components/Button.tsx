@@ -1,19 +1,48 @@
-import { FC, MouseEventHandler, ReactNode } from 'react';
+import {
+  FC,
+  MouseEvent,
+  MouseEventHandler,
+  ReactNode,
+  useContext,
+} from 'react';
+
+// * context
+import { AppCtx } from '../context/AppContextProvider';
+
+// * utils
+import { copyToClipboard } from '../utils/functions';
 
 // * interfaces
 interface ButtonProps {
-    className?: string;
-    onClick: MouseEventHandler;
-    children: ReactNode;
-    rest?: string[];
+  className?: string;
+  onClick?: MouseEventHandler;
+  children: ReactNode;
+  rest?: string[];
 }
 
 const Button: FC<ButtonProps> = ({ className, onClick, children, ...rest }) => {
-    return (
-        <button type='button' className={className || ''} onClick={onClick} {...rest}>
-            {children}
-        </button>
-    );
+  const { setNotifs } = useContext(AppCtx)!;
+
+  const copyHandler = (e: MouseEvent) => {
+    const button = e.target as HTMLElement;
+    const { value, message } = button.dataset;
+
+    if (!message || !value) return;
+
+    copyToClipboard(value);
+    setNotifs(prev => [...prev, message]);
+  };
+
+  return (
+    <button
+      type='button'
+      className={className || ''}
+      onClick={onClick || copyHandler}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
 };
 
 export default Button;

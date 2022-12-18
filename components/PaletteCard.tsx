@@ -3,8 +3,8 @@ import { Dispatch, FC, SetStateAction } from 'react';
 // * components
 import Button from './Button';
 
-// * utils
-import { copyToClipboard } from '../utils/functions';
+// * messages
+import readMessage from '../data/readMessage';
 
 // * interfaces
 import { Palette } from '../utils/interfaces';
@@ -44,8 +44,8 @@ const PaletteCard: FC<PaletteCardProps> = ({ idx, color, locked, setPalette }) =
       </div>
       <Button
         data-value={color}
+        data-message={readMessage('messages.notifs.color')}
         className='font-medium'
-        onClick={copyToClipboard}
       >
         {color}
       </Button>

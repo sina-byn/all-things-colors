@@ -20,6 +20,20 @@ interface ImagePalette {
   complementaryColors: string[];
 }
 
+interface MixData {
+  mixedColor: string;
+  color_1: string;
+  color_2: string;
+  ratio: number;
+}
+
 type Palette = PaletteColor[];
 
-export type { RgbObject, HslObject, Palette, PaletteColor, ImagePalette };
+export type {
+  RgbObject,
+  HslObject,
+  Palette,
+  PaletteColor,
+  ImagePalette,
+  MixData,
+};

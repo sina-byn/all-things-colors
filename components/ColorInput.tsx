@@ -10,7 +10,7 @@ import readMessage from '../data/readMessage';
 interface ColorInputProps {
   value: string;
   className?: string;
-  setValue: Dispatch<SetStateAction<string>>;
+  setValue: Dispatch<SetStateAction<string>> | Function;
 }
 
 const ColorInput: FC<ColorInputProps> = ({ value, setValue, className }) => {

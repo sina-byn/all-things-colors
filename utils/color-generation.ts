@@ -2,7 +2,7 @@
 import { hexToRgb, rgbToHex } from './color-conversion';
 
 // * interfaces
-import type { RgbObject } from './interfaces';
+import type { RgbObject, MixData } from './interfaces';
 
 const generateRandomHexChunk = () => {
   const chunk = Math.floor(Math.random() * 256).toString(16);
@@ -52,9 +52,25 @@ const generateComplementeryColor = (hex: string) => {
   );
 };
 
+
+const generateMixedColor = (data: MixData) => {
+  const { color_1, color_2, ratio } = data;
+  const {r: r_1, g: g_1, b: b_1} = hexToRgb(color_1);
+  const {r: r_2, g: g_2, b: b_2} = hexToRgb(color_2);
+
+  const mixedColor = {
+    r: Math.round(((r_1 - r_2) * ratio / 100) + r_2),
+    g: Math.round(((g_1 - g_2) * ratio / 100) + g_2),
+    b: Math.round(((b_1 - b_2) * ratio / 100) + b_2)
+  };
+
+  return rgbToHex(mixedColor);
+};
+
 export {
   generateTint,
   generateShade,
   generateRandomHex,
+  generateMixedColor,
   generateComplementeryColor
 };

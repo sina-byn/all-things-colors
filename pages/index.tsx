@@ -11,6 +11,7 @@ import ColorInput from '../components/ColorInput';
 import Button from '../components/Button';
 import PaletteCard from '../components/PaletteCard';
 import ImageInput from '../components/ImageInput';
+import RangeInput from '../components/RangeInput';
 const ToastNotification = dynamic(
   () => import('../components/ToastNotification'),
   { ssr: false }
@@ -25,12 +26,13 @@ import {
   generatePaletteFromColor,
 } from '../utils/palette-generation';
 import { hexToRgb, toHexString } from '../utils/color-conversion';
+import { generateMixedColor } from '../utils/color-generation';
 
 // * data
 import GRADIENTS_DATA from '../data/gradients.json';
 
 // * interfaces
-import { RgbObject, ImagePalette, Palette } from '../utils/interfaces';
+import { RgbObject, ImagePalette, Palette, MixData } from '../utils/interfaces';
 
 const Home: NextPage = () => {
   const { notifs } = useContext(AppCtx)!;
@@ -41,8 +43,23 @@ const Home: NextPage = () => {
     mainColors: [],
     complementaryColors: [],
   });
+  const [mixData, setMixData] = useState<MixData>({
+    mixedColor: '',
+    color_1: '#ff4500',
+    color_2: '#8cddd1',
+    ratio: 50,
+  });
 
-  useEffect(() => generatePalette(setPalette), []);
+  useEffect(() => {
+    generatePalette(setPalette);
+  }, []);
+
+  useEffect(() => {
+    setMixData(prev => ({
+      ...prev,
+      mixedColor: generateMixedColor(prev),
+    }));
+  }, [mixData.color_1, mixData.color_2, mixData.ratio]);
 
   return (
     <>
@@ -141,6 +158,33 @@ const Home: NextPage = () => {
               </>
             )}
           </section>
+        </section>
+        <SectionHeader title='Color Mixer' />
+        <section className='color-mixer-section grid xs:grid-cols-2 md:grid-cols-3 mb-16 mx-auto'>
+          <ColorInput
+            value={mixData.color_1}
+            setValue={value =>
+              setMixData(prev => ({ ...prev, color_1: value } as MixData))
+            }
+          />
+          <ColorInput
+            value={mixData.color_2}
+            setValue={value =>
+              setMixData(prev => ({ ...prev, color_2: value } as MixData))
+            }
+          />
+          {mixData.mixedColor.length > 0 && (
+            <div className='card-wrap w-[100px]'>
+              <ColorCard color={mixData.mixedColor} />
+            </div>
+          )}
+          <RangeInput
+            title='Ratio'
+            value={mixData.ratio}
+            setValue={(value: string) =>
+              setMixData(prev => ({ ...prev, ratio: +value } as MixData))
+            }
+          />
         </section>
         {notifs &&
           notifs.map((notif, idx) => (

@@ -73,6 +73,15 @@ const Navbar: FC = () => {
             Image Palette
           </Button>
         </li>
+        <li>
+          <Button
+            onClick={clickHandler}
+            data-section-id='color-mixer-section'
+            className={navButtonClassName}
+          >
+            Color Mixer
+          </Button>
+        </li>
       </ul>
     </nav>
   );

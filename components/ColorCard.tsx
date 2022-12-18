@@ -17,7 +17,7 @@ interface ColorCardProps {
 
 const ColorCard: FC<ColorCardProps> = ({ percent, color }) => {
   return (
-    <div className='card-container flex flex-col items-center gap-y-2'>
+    <div className='card-container w-full flex flex-col items-center gap-y-2'>
       {percent !== undefined && (
         <span className='bg-zinc-600 text-gray-200 px-3 pb-0.5 rounded-md'>
           {percent}%

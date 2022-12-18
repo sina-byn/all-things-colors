@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import {
   FC,
   useRef,
@@ -7,6 +8,12 @@ import {
   SetStateAction,
   DragEvent,
 } from 'react';
+
+// * components
+const EyeDropper = dynamic(
+  () => import('../components/EyeDropper'),
+  { ssr: false }
+);
 
 // * utils
 import { parsePixelsData } from '../utils/functions';
@@ -153,6 +160,7 @@ const ImageInput: FC<ImageInputProps> = ({ setImagePalette }) => {
           />
         </label>
       </section>
+      <EyeDropper />
     </div>
   );
 };

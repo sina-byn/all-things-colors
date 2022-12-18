@@ -55,6 +55,24 @@ const Navbar: FC = () => {
             Tints and Shades
           </Button>
         </li>
+        <li>
+          <Button
+            onClick={clickHandler}
+            data-section-id='color-palette-section'
+            {...{ className: navButtonClassName }}
+          >
+            Color Palette
+          </Button>
+        </li>
+        <li>
+          <Button
+            onClick={clickHandler}
+            data-section-id='image-color-palette-section'
+            {...{ className: navButtonClassName }}
+          >
+            Image Palette
+          </Button>
+        </li>
       </ul>
     </nav>
   );

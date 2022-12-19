@@ -92,7 +92,7 @@ const StaticGradientCard: FC<StaticGradientCardProps> = ({ id, stops }) => {
           key={idx}
           data-value={stop}
           data-message={readMessage('messages.notifs.color')}
-          className='w-full max-w-[120px] text-gray-200 border-2 border-gray-200 rounded-lg py-1 hover:bg-gray-200/50'
+          className='w-full text-sm md:text-base max-w-[120px] text-gray-200 border-2 border-gray-200 rounded-lg py-1 hover:bg-gray-200/50'
         >
           {stop}
         </Button>
@@ -108,17 +108,17 @@ const RandomGradientCard: FC = () => {
     <GradientCard id='random' stops={stops} styleTagId='random-gradient-styles'>
       <Button
         onClick={() => setStops(generateRandomGradientStops())}
-        className='w-10/12 max-w-[240px] text-gray-200 border-2 border-gray-200 rounded-lg py-1 hover:bg-gray-200/50 pb-1.5'
+        className='sm:w-10/12 w-9/12 max-w-[240px] text-sm md:text-base text-gray-200 border-2 border-gray-200 rounded-lg py-1 hover:bg-gray-200/50 pb-1.5'
       >
         randomize
       </Button>
-      <div className='random-stops w-10/12 grid grid-cols-2 justify-items-center w-full max-w-[240px] gap-x-2'>
+      <div className='random-stops sm:w-10/12 w-9/12 grid grid-cols-2 justify-items-center w-full max-w-[240px] gap-x-2'>
         {stops.map((stop, idx) => (
           <Button
             key={idx}
             data-value={stop}
             data-message={readMessage('messages.notifs.color')}
-            className='w-full text-gray-200 border-2 border-gray-200 rounded-lg py-1 hover:bg-gray-200/50'
+            className='w-full text-sm md:text-base text-gray-200 border-2 border-gray-200 rounded-lg py-1 hover:bg-gray-200/50'
           >
             {stop}
           </Button>

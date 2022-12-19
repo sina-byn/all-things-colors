@@ -13,9 +13,9 @@ const RangeInput: FC<RangeInputProps> = ({ title, value, setValue }) => {
         setValue(value);
     };
   return (
-    <div className='range-input flex flex-col gap-y-2'>
-      <label className='font-medium text-lg'>{title}</label>
-      <input type='range' value={value} onChange={changeHandler} className='accent-zinc-700 max-w-[250px]' />
+    <div className='range-input flex flex-col justify-self-center -mt-5'>
+      <label className='font-medium text-md'>{title}</label>
+      <input type='range' value={value} onChange={changeHandler} className='accent-zinc-700' />
     </div>
   );
 };

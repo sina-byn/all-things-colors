@@ -2,6 +2,7 @@ import { FC, useEffect, useRef, useState, ReactNode } from 'react';
 
 // * components
 import Button from './Button';
+import Card from './Card';
 
 // * utils
 import {
@@ -60,11 +61,13 @@ const GradientCard: FC<GradientCardProps> = ({
   }, [stops]);
 
   return (
-    <div className={`gradient-${id} aspect-square rounded-2xl overflow-hidden`}>
+    <Card
+      className={`gradient-${id} aspect-square rounded-2xl overflow-hidden shadow-lg`}
+    >
       <div
         className={`
           card-cover flex flex-col items-center justify-center w-full h-full gap-y-2 relative ${coverClassName}
-        `}
+          `}
       >
         <Button>
           <i
@@ -75,7 +78,7 @@ const GradientCard: FC<GradientCardProps> = ({
         </Button>
         {children}
       </div>
-    </div>
+    </Card>
   );
 };
 

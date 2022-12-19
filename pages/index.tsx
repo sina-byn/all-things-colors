@@ -88,23 +88,23 @@ const Home: NextPage = () => {
         <SectionHeader title='Tints and Shades' />
         <section className='tints-and-shades-section mb-16'>
           <ColorInput value={baseColor} setValue={setBaseColor} />
-          <section className='tints-section grid grid-cols-4 xs:grid-cols-6 md:grid-cols-11 gap-y-5 mb-10'>
+          <section className='tints-section grid grid-cols-4 xs:grid-cols-6 lg:grid-cols-11 gap-y-5 mb-10'>
             {generatePaletteFromColor('tint', hexToRgb(baseColor)).map(
               (tint, idx) => (
                 <ColorCard
                   key={idx}
-                  percent={idx * 10}
+                  header={idx * 10 + '%'}
                   color={toHexString(tint as RgbObject)}
                 />
               )
             )}
           </section>
-          <section className='shades-section grid grid-cols-6 md:grid-cols-11 gap-y-5'>
+          <section className='shades-section grid grid-cols-4 xs:grid-cols-6 lg:grid-cols-11 gap-y-5'>
             {generatePaletteFromColor('shade', hexToRgb(baseColor)).map(
               (shade, idx) => (
                 <ColorCard
                   key={idx}
-                  percent={idx * 10}
+                  header={idx * 10 + '%'}
                   color={toHexString(shade as RgbObject)}
                 />
               )
@@ -113,7 +113,7 @@ const Home: NextPage = () => {
         </section>
         <SectionHeader title='Color Palette' />
         <section className='color-palette-section mb-16'>
-          <section className='color-palette md:w-fit grid grid-cols-2 2xs:grid-cols-5 gap-y-4 mx-auto'>
+          <section className='color-palette md:w-fit grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-6 gap-y-4 mx-auto'>
             {plaette.map((plaetteColor, idx) => (
               <PaletteCard
                 key={idx}
@@ -160,7 +160,7 @@ const Home: NextPage = () => {
           </section>
         </section>
         <SectionHeader title='Color Mixer' />
-        <section className='color-mixer-section grid xs:grid-cols-2 md:grid-cols-3 mb-16 mx-auto'>
+        <section className='color-mixer-section grid grid-cols-2 xs:grid-cols-3 justify-items-center items-center mb-16 mx-auto'>
           <ColorInput
             value={mixData.color_1}
             setValue={value =>
@@ -173,11 +173,6 @@ const Home: NextPage = () => {
               setMixData(prev => ({ ...prev, color_2: value } as MixData))
             }
           />
-          {mixData.mixedColor.length > 0 && (
-            <div className='card-wrap w-[100px]'>
-              <ColorCard color={mixData.mixedColor} />
-            </div>
-          )}
           <RangeInput
             title='Ratio'
             value={mixData.ratio}
@@ -185,6 +180,12 @@ const Home: NextPage = () => {
               setMixData(prev => ({ ...prev, ratio: +value } as MixData))
             }
           />
+          {mixData.mixedColor.length > 0 && (
+            <ColorCard
+              color={mixData.mixedColor}
+              className='w-[80px] rounded-md mt-5 aspect-square'
+            />
+          )}
         </section>
         {notifs &&
           notifs.map((notif, idx) => (

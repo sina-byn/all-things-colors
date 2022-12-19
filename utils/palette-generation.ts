@@ -34,11 +34,11 @@ const generatePaletteFromColor = (
 const generatePalette = (setPalette: Dispatch<SetStateAction<Palette>>) => {
   setPalette(prevPalette => {
     if (prevPalette.length === 0) {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 6; i++) {
         prevPalette[i] = { color: generateRandomHex(), locked: false };
       }
     } else {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 6; i++) {
         if (prevPalette[i].locked) continue;
         prevPalette[i].color = generateRandomHex();
       }

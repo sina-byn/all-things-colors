@@ -77,17 +77,22 @@ const Home: NextPage = () => {
       </header> */}
       <main className='max-w-[1440px] px-2 xs:px-6 mx-auto'>
         <SectionHeader title='Gradients' />
-        <section className='gradients-section grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5 mb-16'>
+        <section className='gradients-section grid xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5 mb-6'>
           <GradientCard.Random />
-          {gradients && gradients.map((gradient: any) => (
-            <GradientCard.Static
-              id={gradient.id}
-              key={gradient.id}
-              stops={gradient.stops}
-            />
-          ))}
-          <LoadMore initialLength={7} data={GRADIENTS_DATA} setData={setGradients} />
+          {gradients &&
+            gradients.map((gradient: any) => (
+              <GradientCard.Static
+                id={gradient.id}
+                key={gradient.id}
+                stops={gradient.stops}
+              />
+            ))}
         </section>
+        <LoadMore
+          initialLength={7}
+          data={GRADIENTS_DATA}
+          setData={setGradients}
+        />
         <SectionHeader title='Tints and Shades' />
         <section className='tints-and-shades-section mb-16'>
           <ColorInput value={baseColor} setValue={setBaseColor} />

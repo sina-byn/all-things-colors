@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           name='description'
           content='a web-app that provides you with different color utility tools to boost your speed and productivity'
         />
+        <link rel="icon" type='image/x-icon' href='/favicon.svg' />
       </Head>
       <AppContextProvider>
         <Component {...pageProps} />

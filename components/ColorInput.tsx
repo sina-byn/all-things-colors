@@ -9,11 +9,10 @@ import readMessage from '../data/readMessage';
 // * interfaces
 interface ColorInputProps {
   value: string;
-  className?: string;
   setValue: Dispatch<SetStateAction<string>> | Function;
 }
 
-const ColorInput: FC<ColorInputProps> = ({ value, setValue, className }) => {
+const ColorInput: FC<ColorInputProps> = ({ value, setValue }) => {
   const id = useId();
   const changeHandler = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
@@ -21,22 +20,22 @@ const ColorInput: FC<ColorInputProps> = ({ value, setValue, className }) => {
   };
 
   return (
-    <div
-      className={`color-input flex ${className || 'items-center gap-x-3 mb-5'}`}
-    >
-      <label
-        htmlFor={`color-input-${id}`}
-        style={{ background: value }}
-        className='min-w-[100px] aspect-square rounded-lg shadow-lg cursor-pointer'
-      >
-        <input
-          type='color'
-          value={value}
-          className='hidden'
-          id={`color-input-${id}`}
-          onChange={changeHandler}
-        />
-      </label>
+    <div className='color-input w-[80px] flex flex-col gap-y-3 my-5'>
+      <div className='label-wrap w-full bg-gray-300 aspect-square rounded-lg shadow-lg p-2'>
+        <label
+          htmlFor={`color-input-${id}`}
+          style={{ background: value }}
+          className='inline-block w-full h-full cursor-pointer rounded-md'
+        >
+          <input
+            type='color'
+            value={value}
+            className='hidden'
+            id={`color-input-${id}`}
+            onChange={changeHandler}
+          />
+        </label>
+      </div>
       <Button
         data-value={value}
         data-message={readMessage('message.notifs.color')}

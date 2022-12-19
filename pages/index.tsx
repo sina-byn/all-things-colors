@@ -65,7 +65,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      {/* <header className='h-[50px] sticky top-0 z-50 bg-gray-100 py-3'>
+      <header className='h-[50px] sticky top-0 z-50 bg-gray-100 py-3 shadow-lg'>
         <div className='header-content max-w-[1440px] flex items-center justify-between px-2 xs:px-6 -mt-0.5 mx-auto'>
           <h1 className='text-2xl font-bold overflow-hidden'>
             <span className='text-orange-red'>A</span>ll&nbsp;
@@ -74,7 +74,7 @@ const Home: NextPage = () => {
           </h1>
           <Navbar />
         </div>
-      </header> */}
+      </header>
       <main className='max-w-[1440px] px-2 xs:px-6 mx-auto'>
         <SectionHeader title='Gradients' />
         <section className='gradients-section grid xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5 mb-6'>

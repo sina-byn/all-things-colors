@@ -1,4 +1,4 @@
-import { FC, MouseEvent } from 'react';
+import { FC, MouseEvent, useState } from 'react';
 
 // * components
 import Button from './Button';
@@ -11,12 +11,13 @@ const navButtonClassName = `
 `;
 
 const Navbar: FC = () => {
+  const [expanded, setExpanded] = useState<boolean>(false);
+
+  const expandToggler = () => setExpanded(prev => !prev);
   const clickHandler = (e: MouseEvent) => {
     const navButton = e.target as HTMLElement;
     const sectionId = navButton.dataset.sectionId;
     const section = document.querySelector(`.${sectionId}`);
-
-    console.log(sectionId);
 
     if (!section || !sectionId) return;
 
@@ -36,7 +37,26 @@ const Navbar: FC = () => {
 
   return (
     <nav>
-      <ul className='flex items-center gap-x-4'>
+      <i
+        onClick={expandToggler}
+        className='fa-solid fa-bars fa-xl block lg:hidden cursor-pointer hover:text-orange-red'
+      />
+      <ul
+        className={`
+        flex flex-col lg:flex-row items-center gap-x-4 gap-y-6
+        fixed lg:static top-0 right-0 z-[150]
+        h-screen lg:h-auto bg-gray-100 lg:bg-transparent
+        px-10 lg:px-0 shadow-2xl lg:shadow-none
+        lg:translate-x-0 transition-transform duration-300
+        ${expanded ? '' : 'translate-x-full'}
+      `}
+      >
+        <li className='lg:hidden w-fit self-end mt-3.5 mb-5 -mr-3'>
+          <i
+            onClick={expandToggler}
+            className='fa-solid fa-close fa-xl cursor-pointer hover:text-orange-red'
+          />
+        </li>
         <li>
           <Button
             onClick={clickHandler}
@@ -83,6 +103,14 @@ const Navbar: FC = () => {
           </Button>
         </li>
       </ul>
+      <div
+        onClick={expandToggler}
+        className={`
+        overlay block lg:hidden fixed inset-0 w-screen h-screen bg-black/60
+        transition-transform duration-300
+        ${expanded ? '' : '-translate-x-full'}
+        `}
+      />
     </nav>
   );
 };

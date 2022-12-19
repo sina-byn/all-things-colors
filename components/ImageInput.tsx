@@ -10,10 +10,9 @@ import {
 } from 'react';
 
 // * components
-const EyeDropper = dynamic(
-  () => import('../components/EyeDropper'),
-  { ssr: false }
-);
+const EyeDropper = dynamic(() => import('../components/EyeDropper'), {
+  ssr: false,
+});
 
 // * utils
 import { parsePixelsData } from '../utils/functions';
@@ -98,17 +97,20 @@ const ImageInput: FC<ImageInputProps> = ({ setImagePalette }) => {
   const dropHandler = (e: DragEvent) => {
     e.preventDefault();
     dropZoneRef.current!.classList.remove(...activeDropZoneClassName);
+    dropZoneRef.current!.classList.add('border-dashed');
     const file = e.dataTransfer.files[0];
     imageInputHandler(file);
   };
 
   const dragCancelHandler = () => {
     dropZoneRef.current!.classList.remove(...activeDropZoneClassName);
+    dropZoneRef.current!.classList.add('border-dashed');
   };
 
   const dragOverHandler = (e: DragEvent) => {
     e.preventDefault();
     dropZoneRef.current!.classList.add(...activeDropZoneClassName);
+    dropZoneRef.current!.classList.remove('border-dashed');
   };
 
   return (
@@ -145,7 +147,9 @@ const ImageInput: FC<ImageInputProps> = ({ setImagePalette }) => {
         `}
       >
         <i className='fa-solid fa-cloud-arrow-up text-5xl lg:text-6xl' />
-        <span className='font-medium text-lg text-center px-4'>Drag and Drop an image or</span>
+        <span className='font-medium text-lg text-center px-4'>
+          Drag and Drop an image or
+        </span>
         <label
           htmlFor='image-input'
           className='border-zinc-700 border-2 text-sm font-medium px-2 py-1 rounded-md cursor-pointer'

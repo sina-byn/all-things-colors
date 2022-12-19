@@ -12,6 +12,7 @@ import Button from '../components/Button';
 import PaletteCard from '../components/PaletteCard';
 import ImageInput from '../components/ImageInput';
 import RangeInput from '../components/RangeInput';
+import LoadMore from '../components/LoadMore';
 const ToastNotification = dynamic(
   () => import('../components/ToastNotification'),
   { ssr: false }
@@ -37,6 +38,7 @@ import { RgbObject, ImagePalette, Palette, MixData } from '../utils/interfaces';
 const Home: NextPage = () => {
   const { notifs } = useContext(AppCtx)!;
 
+  const [gradients, setGradients] = useState<any>(GRADIENTS_DATA.slice(0, 7));
   const [baseColor, setBaseColor] = useState<string>('#ff4500');
   const [plaette, setPalette] = useState<Palette>([]);
   const [imagePalette, setImagePalette] = useState<ImagePalette>({
@@ -77,13 +79,14 @@ const Home: NextPage = () => {
         <SectionHeader title='Gradients' />
         <section className='gradients-section grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5 mb-16'>
           <GradientCard.Random />
-          {GRADIENTS_DATA.map(gradient => (
+          {gradients && gradients.map((gradient: any) => (
             <GradientCard.Static
               id={gradient.id}
               key={gradient.id}
               stops={gradient.stops}
             />
           ))}
+          <LoadMore initialLength={7} data={GRADIENTS_DATA} setData={setGradients} />
         </section>
         <SectionHeader title='Tints and Shades' />
         <section className='tints-and-shades-section mb-16'>

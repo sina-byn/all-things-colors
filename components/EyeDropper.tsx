@@ -26,9 +26,7 @@ const EyeDropper: FC = () => {
   return (
     <section className='eye-dropper-section flex flex-col items-center justify-center'>
       {pickedColor.length > 0 && (
-        <div className='card-wrap w-[150px] rounded-lg overflow-hidden'>
-          <ColorCard color={pickedColor} />
-        </div>
+        <ColorCard color={pickedColor} className='w-[100px] rounded-md' />
       )}
       <Button
         onClick={openHandler}

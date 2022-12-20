@@ -111,7 +111,7 @@ const RandomGradientCard: FC = () => {
     <GradientCard id='random' stops={stops} styleTagId='random-gradient-styles'>
       <Button
         onClick={() => setStops(generateRandomGradientStops())}
-        className='sm:w-10/12 w-9/12 max-w-[240px] text-sm md:text-base text-gray-200 border-2 border-gray-200 rounded-lg py-1 hover:bg-gray-200/50 pb-1.5'
+        className='sm:w-10/12 w-9/12 max-w-[240px] text-gray-200 border-2 border-gray-200 py-1 hover:bg-gray-200/50 pb-1.5'
       >
         randomize
       </Button>
@@ -121,7 +121,7 @@ const RandomGradientCard: FC = () => {
             key={idx}
             data-value={stop}
             data-message={readMessage('messages.notifs.color')}
-            className='w-full text-sm md:text-base text-gray-200 border-2 border-gray-200 rounded-lg py-1 hover:bg-gray-200/50'
+            className='w-full text-gray-200 border-2 border-gray-200 py-1 hover:bg-gray-200/50'
           >
             {stop}
           </Button>

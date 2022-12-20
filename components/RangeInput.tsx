@@ -1,4 +1,4 @@
-import { FC, Dispatch, SetStateAction, ChangeEvent } from 'react';
+import { FC, ChangeEvent } from 'react';
 
 interface RangeInputProps {
   title: string;

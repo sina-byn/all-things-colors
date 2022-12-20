@@ -60,7 +60,6 @@ const PaletteCard: FC<PaletteCardProps> = ({
       <Button
         data-value={color}
         data-message={readMessage('messages.notifs.color')}
-        className='font-medium'
       >
         {color}
       </Button>

@@ -36,7 +36,7 @@ const Button: FC<ButtonProps> = ({ className, onClick, children, ...rest }) => {
   return (
     <button
       type='button'
-      className={className || ''}
+      className={`font-medium text-sm sm:text-base rounded-md ${className}`}
       onClick={onClick || copyHandler}
       {...rest}
     >

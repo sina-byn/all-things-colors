@@ -37,7 +37,7 @@ const LoadMore: FC<LoadMoreProps> = ({ data, setData, initialLength }) => {
       <Button
         onClick={loadMoreHandler}
         {...{ disabled: loading }}
-        className='w-fit flex items-center justify-center gap-x-4 text-gray-200 font-medium bg-zinc-700 rounded-lg px-6 py-3 mx-auto transition-all duration-100 hover:bg-zinc-800 active:scale-95 disabled:scale-100'
+        className='w-fit flex items-center justify-center gap-x-4 text-gray-200 bg-zinc-700 px-4 py-2 mx-auto transition-all duration-100 hover:bg-zinc-800 active:scale-95 disabled:scale-100'
       >
         Load More
         {loading && <Spinner className='w-6 border-t-blue-500' />}

@@ -30,7 +30,7 @@ const EyeDropper: FC = () => {
       )}
       <Button
         onClick={openHandler}
-        className='border-2 border-zinc-700 px-2 py-1 rounded-md mt-5'
+        className='border-2 border-zinc-700 px-2 pt-1 pb-1.5 mt-5'
       >
         <i className='fa-solid fa-eye-dropper mr-2' />
         Eye Dropper

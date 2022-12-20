@@ -39,7 +39,7 @@ const ColorInput: FC<ColorInputProps> = ({ value, setValue }) => {
       <Button
         data-value={value}
         data-message={readMessage('message.notifs.color')}
-        className='border-2 border-zinc-700 rounded-md font-medium px-2 py-1'
+        className='border-2 border-zinc-700'
       >
         {value}
       </Button>

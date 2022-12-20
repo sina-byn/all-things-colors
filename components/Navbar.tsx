@@ -4,7 +4,7 @@ import { FC, MouseEvent, useState } from 'react';
 import Button from './Button';
 
 const navButtonClassName = `
-    nav-btn relative font-medium
+    nav-btn relative
     after:content-[''] after:absolute after:left-0 after:top-full
     after:w-full after:h-[2px] after:bg-orange-red after:scale-x-0
     after:transition-all duration-300 hover:after:scale-x-100

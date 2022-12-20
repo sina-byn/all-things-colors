@@ -182,7 +182,7 @@ const Home: NextPage = () => {
             }
           />
           <RangeInput
-            title='Ratio'
+            titles={['color-1', 'color-2']}
             value={mixData.ratio}
             setValue={(value: string) =>
               setMixData(prev => ({ ...prev, ratio: +value } as MixData))

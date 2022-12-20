@@ -59,9 +59,9 @@ const generateMixedColor = (data: MixData) => {
   const {r: r_2, g: g_2, b: b_2} = hexToRgb(color_2);
 
   const mixedColor = {
-    r: Math.round(((r_1 - r_2) * ratio / 100) + r_2),
-    g: Math.round(((g_1 - g_2) * ratio / 100) + g_2),
-    b: Math.round(((b_1 - b_2) * ratio / 100) + b_2)
+    r: Math.round(((r_2 - r_1) * ratio / 100) + r_1),
+    g: Math.round(((g_2 - g_1) * ratio / 100) + g_1),
+    b: Math.round(((b_2 - b_1) * ratio / 100) + b_1)
   };
 
   return rgbToHex(mixedColor);

@@ -57,12 +57,7 @@ const PaletteCard: FC<PaletteCardProps> = ({
           `}
         />
       </div>
-      <Button
-        data-value={color}
-        data-message={readMessage('messages.notifs.color')}
-      >
-        {color}
-      </Button>
+      <span className='text-center font-medium'>{color}</span>
     </Card>
   );
 };

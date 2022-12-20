@@ -99,7 +99,12 @@ const ImageInput: FC<ImageInputProps> = ({ setImagePalette }) => {
     dropZoneRef.current!.classList.remove(...activeDropZoneClassName);
     dropZoneRef.current!.classList.add('border-dashed');
     const file = e.dataTransfer.files[0];
-    imageInputHandler(file);
+    const fileType = file.type.split('/');
+    if (
+      fileType[0] === 'image' &&
+      ['jpg', 'jpeg', 'jfif', 'png', 'webp'].includes(fileType[1])
+    )
+      imageInputHandler(file);
   };
 
   const dragCancelHandler = () => {
@@ -150,6 +155,9 @@ const ImageInput: FC<ImageInputProps> = ({ setImagePalette }) => {
         <span className='font-medium text-lg text-center px-4'>
           Drag and Drop an image or
         </span>
+        <small className='font-medium text-center px-4 -mt-4'>
+          &#40;.jpg, .png, .webp&#41;
+        </small>
         <label
           htmlFor='image-input'
           className='border-zinc-700 border-2 text-sm font-medium px-2 py-1 rounded-md cursor-pointer'
@@ -159,7 +167,7 @@ const ImageInput: FC<ImageInputProps> = ({ setImagePalette }) => {
             type='file'
             id='image-input'
             onChange={changeHandler}
-            accept='image/*'
+            accept='.jpg,.jpeg,.jfif,.png,.webp'
             className='hidden'
           />
         </label>

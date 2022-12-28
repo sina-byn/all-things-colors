@@ -1,4 +1,7 @@
-import { FC, useId, Dispatch, SetStateAction, ChangeEvent } from 'react';
+import { FC, Dispatch, SetStateAction } from 'react';
+
+// * react-colorful
+import { HexColorPicker } from 'react-colorful';
 
 // * components
 import Button from './Button';
@@ -13,29 +16,11 @@ interface ColorInputProps {
 }
 
 const ColorInput: FC<ColorInputProps> = ({ value, setValue }) => {
-  const id = useId();
-  const changeHandler = (e: ChangeEvent) => {
-    const input = e.target as HTMLInputElement;
-    setValue(input.value);
-  };
+  const changeHandler = (color: string) => setValue(color);
 
   return (
     <div className='color-input w-[80px] flex flex-col gap-y-3 my-5'>
-      <div className='label-wrap w-full bg-gray-300 aspect-square rounded-lg shadow-lg p-2'>
-        <label
-          htmlFor={`color-input-${id}`}
-          style={{ background: value }}
-          className='inline-block w-full h-full cursor-pointer rounded-md'
-        >
-          <input
-            type='color'
-            value={value}
-            className='hidden'
-            id={`color-input-${id}`}
-            onChange={changeHandler}
-          />
-        </label>
-      </div>
+      <HexColorPicker color={value} onChange={changeHandler} />
       <Button
         data-value={value}
         data-message={readMessage('message.notifs.color')}

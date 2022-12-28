@@ -19,7 +19,7 @@ const ColorInput: FC<ColorInputProps> = ({ value, setValue }) => {
   const changeHandler = (color: string) => setValue(color);
 
   return (
-    <div className='color-input w-[80px] flex flex-col items-center gap-y-3 my-5'>
+    <div className='color-input w-[80px] flex flex-col items-center gap-y-3 my-5 mx-auto'>
       <HexColorPicker color={value} onChange={changeHandler} />
       <Button
         data-value={value}

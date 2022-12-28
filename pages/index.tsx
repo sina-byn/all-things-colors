@@ -168,7 +168,7 @@ const Home: NextPage = () => {
           </section>
         </section>
         <SectionHeader title='Color Mixer' />
-        <section className='color-mixer-section grid grid-cols-2 xs:grid-cols-3 justify-items-center items-center mb-16 mx-auto'>
+        <section className='color-mixer-section grid xs:grid-cols-2 md:grid-cols-3 justify-items-center items-center mb-16 mx-auto gap-y-10'>
           <ColorInput
             value={mixData.color_1}
             setValue={value =>
